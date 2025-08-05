@@ -2,12 +2,7 @@
 
 ---@type LazyPluginSpec
 local Spec = {
-  "mason-org/mason-lspconfig.nvim", event = "VeryLazy",
-
-  dependencies = {
-    "mason.nvim",
-    "nvim-lspconfig",
-  },
+  "mason-org/mason-lspconfig.nvim", event = "VeryLazy", dependencies = "mason.nvim",
 
   opts = {
     ensure_installed = {
