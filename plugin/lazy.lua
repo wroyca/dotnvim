@@ -36,44 +36,40 @@ local opts = {
   }
 }
 
--- `LazyInstall` user event is triggered by Lazy.nvim once all required plugins
--- have been installed. This typically occurs on first launch, at which point
--- Lazy opens its UI (`filetype=lazy`) to display install progress. After
--- completion, `LazyInstall` fires and we close the Lazy window automatically to
--- return focus to the editor. This is the expected flow during initial setup.
+-- Handle Lazy.nvim's plugin installation lifecycle.
 --
--- However, `LazyInstall` is also emitted when updating or installing individual
--- plugins manually. If the user has opened the Lazy UI themselves in this case,
--- we *do not* want to close it automatically - doing so would interrupt an
--- interactive session.
+-- On first launch, Lazy.nvim installs required plugins and opens its UI
+-- (`filetype=lazy`) to show progress. Once complete, it emits the
+-- `LazyInstall` event. In this case, we close the Lazy window automatically to
+-- return focus to the editor, this is part of the expected first-time setup
+-- flow.
 --
--- To distinguish between the two cases, we register a one-time handler for both
--- `LazyInstall` and `VeryLazy`. If `LazyInstall` fires and the current buffer
--- is still showing the Lazy UI (`filetype=lazy`), then we assume this is part
--- of automatic startup and close the window.
+-- However, `LazyInstall` is also triggered during manual plugin actions (e.g.,
+-- updates), if the user opened the Lazy UI themselves. In that case, we do not
+-- want to close it unexpectedly.
 --
--- If `VeryLazy` fires first, we infer that the editor has reached an idle state
--- without triggering `LazyInstall`, likely because no plugins were installed.
--- Or, if it fires after the user has manually opened Lazy, we use it as an
--- opportunity to *cancel* the `LazyInstall` autocmd, *unless* we're still on a
--- Lazy buffer, in which case we preserve the close logic to allow first-time
--- setup to complete cleanly.
+-- To distinguish between these two situations, we register a one-time handler
+-- for both `LazyInstall` and `VeryLazy`:
 --
-local id = vim.api.nvim_create_autocmd ("User", {
-  once = true,
-  pattern = "LazyInstall",
-  callback = function ()
-    if vim.o.filetype == "lazy" then
-      vim.cmd.close ()
-    end
-  end,
-})
+-- - If `LazyInstall` fires *and* the current buffer is still the Lazy UI, we
+--   assume this is automated startup behavior and close the window.
+--
+-- - If `VeryLazy` fires first, we assume the editor has reached an idle state
+--   without plugin installs, or the user opened Lazy manually. In either case,
+--   we cancel the `LazyInstall` autocmd, unless we're still in a Lazy buffer,
+--   in which case we preserve the close logic to allow setup to complete
+--   cleanly.
 vim.api.nvim_create_autocmd ("User", {
-  once = true,
-  pattern = "VeryLazy",
-  callback = function ()
-    if vim.o.filetype ~= "lazy" then
-      pcall (vim.api.nvim_del_autocmd, id)
+  pattern = { "LazyInstall", "VeryLazy" },
+  callback = function (ev)
+    if ev.match == "LazyInstall" then
+      if vim.o.filetype == "lazy" then
+        vim.cmd.close ()
+      end
+    elseif ev.match == "VeryLazy" then
+      if vim.o.filetype ~= "lazy" then
+        pcall (vim.api.nvim_del_autocmd, ev.id)
+      end
     end
   end,
 })
