@@ -37,10 +37,16 @@ local Spec = {
   },
 
   opts = {
-    folding = { enabled = false },
-    icons = { enabled = false },
+    folding = {
+      enabled = false
+    },
+    icons = {
+      enabled = false
+    },
     maxWorkers = vim.uv.available_parallelism (),
-    resultLocation = { showNumberLabel = false },
+    resultLocation = {
+      showNumberLabel = false
+    },
     showEngineInfo = false,
     windowCreationCommand = "botright vsplit",
   },
@@ -50,13 +56,10 @@ local Spec = {
 
     -- Install a buffer-local 'q' key mapping to close 'grug-far' buffers.
     vim.api.nvim_create_autocmd ("FileType", {
-      pattern = {
-        "grug-far",
-      },
+      pattern = "grug-far",
       callback = function (event)
         vim.keymap.set ("n", "q", function ()
           require ("mini.bufremove").wipeout (0, true)
-          -- close the split window
           vim.cmd.close ()
         end, { buffer = event.buf, silent = true })
       end,

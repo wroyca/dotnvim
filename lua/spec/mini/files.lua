@@ -514,7 +514,7 @@ function MiniFilesGitignore:setup_fs_watcher (dir)
 
       -- Starts watching the gitignore file for changes. The callback is
       -- triggered when the file is modified (e.g., saved).
-      uv.fs_event_start (handle, gitignore_file, {}, function (err, filename, events)
+      uv.fs_event_start (handle, gitignore_file, {}, function (err, _, events)
         if not err then
           vim.schedule (function ()
             self.logger:debug ("gitignore file changed: %s (events: %s)", gitignore_file, vim.inspect (events))
@@ -597,7 +597,7 @@ function MiniFilesGitignore:prefetch_subdirectories (parent_dir, depth)
           -- Collects all file and directory names within the subdirectory which
           -- are needed for `git check-ignore`.
           while true do
-            local sub_name, sub_type = uv.fs_scandir_next (sub_handle)
+            local sub_name, _ = uv.fs_scandir_next (sub_handle)
             if not sub_name then
               break
             end
@@ -779,7 +779,7 @@ function MiniFilesGitignore:cleanup ()
   -- Stops all active filesystem watchers. `handle:is_closing()` checks if a
   -- handle is already in the process of closing. `handle:close()` releases the
   -- underlying libuv resources.
-  for path, handle in pairs (self.fs_watchers) do
+  for _, handle in pairs (self.fs_watchers) do
     if handle and not handle:is_closing () then
       handle:close ()
     end

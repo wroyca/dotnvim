@@ -18,6 +18,11 @@ local config = {
 
   capabilities = {
     textDocument = {
+      completion = {
+        completionItem = {
+          snippetSupport = false,
+        },
+      },
       inactiveRegionsCapabilities = {
         inactiveRegions = true,
       },
@@ -27,10 +32,6 @@ local config = {
   filetypes = {
     "c",
     "cpp",
-  },
-
-  root_markers = {
-    ".git",
   },
 }
 

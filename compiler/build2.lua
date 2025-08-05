@@ -4,4 +4,4 @@ end
 
 vim.b.current_compiler = "b"
 
-vim.b.makeprg = "b"
+vim.o.makeprg = "b"

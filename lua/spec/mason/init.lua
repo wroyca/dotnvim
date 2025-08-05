@@ -8,6 +8,10 @@ local Spec = {
     pip = {
       upgrade_pip = true,
     },
+
+    ui = {
+      backdrop = 100,
+    },
   },
 }
 

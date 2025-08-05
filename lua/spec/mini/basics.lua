@@ -2,7 +2,7 @@
 
 ---@type LazyPluginSpec
 local Spec = {
-  "mini.basics", virtual = true, enabled = false
+  "mini.basics", virtual = true, enabled = false,
 }
 
 -- We initially reached for `mini.basics` just to get highlight-on-yank, which
@@ -14,7 +14,9 @@ local Spec = {
 
 vim.api.nvim_create_autocmd ("TextYankPost", {
   pattern = "*",
-  callback = function () vim.hl.on_yank () end,
+  callback = function ()
+    vim.hl.on_yank ()
+  end,
   desc = "Highlight yanked text",
 })
 

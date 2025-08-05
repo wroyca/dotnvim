@@ -6,7 +6,7 @@ local Spec = {
 
   ---@type wk.Opts
   opts = {
-    preset = "helix",
+    preset = "modern",
 
     delay = function (ctx)
       return ctx.plugin and 0 or 500

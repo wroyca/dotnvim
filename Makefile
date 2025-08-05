@@ -21,7 +21,6 @@ doc:
 clean:
 	@echo "Cleaning generated files..."
 	@rm -f doc/*.txt
-	@echo "Done!"
 
 help:
 	@echo "Available targets:"
@@ -33,7 +32,7 @@ help:
 	@echo "  help          - Show this help message"
 
 check-updates:
-	@echo "checking for updates..."
+	@echo "Checking for updates..."
 	@$(MAKE) --silent check-mini-doc-version
 	@$(MAKE) --silent check-mini-test-version
 
@@ -62,7 +61,7 @@ update-mini-doc:
 		echo "error: LATEST_VERSION not specified"; \
 		exit 1; \
 	fi
-	@echo "updating mini.doc to $(LATEST_VERSION)..."
+	@echo "Updating mini.doc to $(LATEST_VERSION)..."
 	@rm -rf pack/dist/opt/mini.doc.tmp
 	@curl -sL https://github.com/echasnovski/mini.doc/archive/refs/tags/$(LATEST_VERSION).tar.gz | tar xz -C pack/dist/opt/
 	@mv pack/dist/opt/mini.doc-* pack/dist/opt/mini.doc.tmp
@@ -72,10 +71,10 @@ update-mini-doc:
 
 update-mini-test:
 	@if [ -z "$(LATEST_VERSION)" ]; then \
-		echo "Error: LATEST_VERSION not specified"; \
+		echo "error: LATEST_VERSION not specified"; \
 		exit 1; \
 	fi
-	@echo "updating mini.test to $(LATEST_VERSION)..."
+	@echo "Updating mini.test to $(LATEST_VERSION)..."
 	@rm -rf pack/dist/opt/mini.test.tmp
 	@curl -sL https://github.com/echasnovski/mini.test/archive/refs/tags/$(LATEST_VERSION).tar.gz | tar xz -C pack/dist/opt/
 	@mv pack/dist/opt/mini.test-* pack/dist/opt/mini.test.tmp

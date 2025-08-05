@@ -59,6 +59,7 @@ local opts = {
 --   we cancel the `LazyInstall` autocmd, unless we're still in a Lazy buffer,
 --   in which case we preserve the close logic to allow setup to complete
 --   cleanly.
+
 vim.api.nvim_create_autocmd ("User", {
   pattern = { "LazyInstall", "VeryLazy" },
   callback = function (ev)

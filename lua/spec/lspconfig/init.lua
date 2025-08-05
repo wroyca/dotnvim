@@ -4,10 +4,10 @@
 local Spec = {
   "neovim/nvim-lspconfig",
 
-  -- Note that `lazy.nvim` installs this plugin in a deterministic root directory,
-  -- which we locate via `lazy.core.config.options.root`. We then insert that path
-  -- at the beginning of `runtimepath`, thereby making `nvim-lspconfig`'s module
-  -- tree available to `require()`.
+  -- Note that `lazy.nvim` installs this plugin in a deterministic root
+  -- directory, which we locate via `lazy.core.config.options.root`. We then
+  -- insert that path at the beginning of `runtimepath`, thereby making
+  -- `nvim-lspconfig`'s module tree available to `require()`.
   --
   -- From Neovim's point of view, the plugin is now "present" (as far as module
   -- resolution goes), but remains blissfully unaware that it is not, in fact,
@@ -18,9 +18,9 @@ local Spec = {
   -- which take precedence over any user-defined modules of the same name.
   --
   -- In practice, this means that a `clangd` config provided by the plugin will
-  -- quietly shadow our own `lsp/clangd.lua`, leaving us none the wiser
-  -- unless we go looking.
-  --
+  -- quietly shadow our own `lsp/clangd.lua`, leaving us none the wiser unless
+  -- we go looking.
+
   init = function ()
     local lazy_root = require ("lazy.core.config").options.root
     local lsp_path = lazy_root .. "/nvim-lspconfig"
