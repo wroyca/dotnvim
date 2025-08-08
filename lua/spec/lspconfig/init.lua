@@ -23,7 +23,7 @@ local Spec = {
 
   init = function ()
     local lazy_root = require ("lazy.core.config").options.root
-    local lsp_path = lazy_root .. "/nvim-lspconfig"
+    local lsp_path = vim.fs.normalize (lazy_root .. "/nvim-lspconfig")
 
     -- Avoid re-prepending if already present in runtimepath
     if not vim.tbl_contains (vim.opt.runtimepath:get (), lsp_path) then

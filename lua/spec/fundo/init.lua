@@ -2,7 +2,7 @@
 
 ---@type LazyPluginSpec
 local Spec = {
-  "kevinhwang91/nvim-fundo", dependencies = "kevinhwang91/promise-async", event = "VeryLazy",
+  "kevinhwang91/nvim-fundo", event = "VeryLazy",
 
   ---@type FundoConfig
   opts = {
@@ -30,11 +30,11 @@ local Spec = {
     -- not introduce observable overhead.
 
     local uv = vim.uv
-    local archive_dir = vim.fs.joinpath (vim.fn.stdpath ("cache"), "fundo")
+    local archive_dir = vim.fs.normalize (vim.fs.joinpath (vim.fn.stdpath ("cache"), "fundo"))
     local entries = vim.fn.readdir (archive_dir) or {}
 
     for _, name in ipairs (entries) do
-      local path = vim.fs.joinpath (archive_dir, name)
+      local path = vim.fs.normalize (vim.fs.joinpath (archive_dir, name))
       local stat = uv.fs_stat (path)
       if stat and stat.mtime and (os.time () - stat.mtime.sec > 7 * 24 * 60 * 60) then
         vim.fn.delete (path)

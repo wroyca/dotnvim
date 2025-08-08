@@ -13,7 +13,7 @@ local Spec = {
     },
   },
 
-  -- XXX: https://github.com/neovim/neovim/pull/33375
+  -- https://github.com/neovim/neovim/pull/33375
   { "Bilal2453/luvit-meta" },
 }
 

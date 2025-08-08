@@ -15,14 +15,22 @@ local Spec = {
     {
       "<leader>sw",
       function ()
-        require ("grug-far").open ({ prefills = { search = vim.fn.expand ("<cword>") } })
+        require ("grug-far").open ({
+          prefills = {
+            search = vim.fn.expand ("<cword>"),
+          },
+        })
       end,
       desc = "Search word under cursor",
     },
     {
       "<leader>sf",
       function ()
-        require ("grug-far").open ({ prefills = { paths = vim.fn.expand ("%") } })
+        require ("grug-far").open ({
+          prefills = {
+            paths = vim.fn.expand ("%"),
+          },
+        })
       end,
       desc = "Search in current file",
     },
@@ -38,14 +46,14 @@ local Spec = {
 
   opts = {
     folding = {
-      enabled = false
+      enabled = false,
     },
     icons = {
-      enabled = false
+      enabled = false,
     },
     maxWorkers = vim.uv.available_parallelism (),
     resultLocation = {
-      showNumberLabel = false
+      showNumberLabel = false,
     },
     showEngineInfo = false,
     windowCreationCommand = "botright vsplit",
@@ -54,14 +62,13 @@ local Spec = {
   config = function (_, opts)
     require ("grug-far").setup (opts)
 
-    -- Install a buffer-local 'q' key mapping to close 'grug-far' buffers.
     vim.api.nvim_create_autocmd ("FileType", {
       pattern = "grug-far",
-      callback = function (event)
+      callback = function (ev)
         vim.keymap.set ("n", "q", function ()
           require ("mini.bufremove").wipeout (0, true)
           vim.cmd.close ()
-        end, { buffer = event.buf, silent = true })
+        end, { buffer = ev.buf, ev = true })
       end,
     })
   end,

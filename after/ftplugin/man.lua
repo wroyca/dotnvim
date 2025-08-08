@@ -17,11 +17,10 @@ end
 -- wrong window entirely.
 
 vim.api.nvim_create_autocmd ("BufWinEnter", {
-  callback = function (event)
+  callback = function (ev)
     if vim.bo.filetype == "man" then
       vim.api.nvim_exec2 ("wincmd L", {})
-      vim.bo[event.buf].buflisted = false
-      vim.keymap.set ("n", "q", "<cmd>q<cr>", { buffer = event.buf, silent = true })
+      vim.bo[ev.buf].buflisted = false
     end
   end,
 })

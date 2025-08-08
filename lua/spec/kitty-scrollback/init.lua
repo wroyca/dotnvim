@@ -2,8 +2,9 @@
 
 ---@type LazyPluginSpec
 local Spec = {
-  "mikesmithgh/kitty-scrollback.nvim", event = "User KittyScrollbackLaunch", opts = {},
+  "mikesmithgh/kitty-scrollback.nvim", opts = {},
 
+  event = "User KittyScrollbackLaunch",
   cmd = {
     "KittyScrollbackGenerateKittens",
     "KittyScrollbackCheckHealth",

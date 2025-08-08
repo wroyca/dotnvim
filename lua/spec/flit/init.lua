@@ -2,7 +2,7 @@
 
 ---@type LazyPluginSpec
 local Spec = {
-  "ggandor/flit.nvim", dependencies = "ggandor/leap.nvim", commit = "669c5a3c0494b1d032b7366e8935888bfa3953a2",
+  "ggandor/flit.nvim",
 
   keys = {
     {
@@ -31,6 +31,8 @@ local Spec = {
     multiline = false,
     labeled_modes = "nx",
   },
+
+  commit = "669c5a3c0494b1d032b7366e8935888bfa3953a2",
 }
 
 return Spec
