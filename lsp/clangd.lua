@@ -1,6 +1,3 @@
-require ("lsp.handlers.document_link").setup ()
-require ("lsp.handlers.inactive_regions").setup ()
-
 ---@type vim.lsp.config
 local config = {
   cmd = {
